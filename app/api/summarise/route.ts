@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     // 🛢 Save to Supabase
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
     await supabase.from("summaries").insert({ url, summary: urdu })
-    
+
     // 🗃 Save full blog to MongoDB
     const client = await MongoClient.connect(MONGODB_URI)
     const db = client.db("blogSummariser")
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 
     // 📤 Return result
     return NextResponse.json({ summary, urdu })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API Error:", error)
     return NextResponse.json(
       { error: "Failed to summarise blog." },
